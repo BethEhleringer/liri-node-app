@@ -2,10 +2,11 @@ require("dotenv").config();
 
 var fs = require("fs");
 //Add the code requireed to import keys.js and store it in a variable
-var keys = require("./keys.js");
 
+var Spotify = require('node-spotify-api');
+var keys = require("./keys.js");
 //Access your keys information
-//var spotify = new Spotify(keys.spotify);
+var spotify = new Spotify(keys.spotify);
 //Request Bands in Town API
 
 var moment = require("moment");
@@ -84,27 +85,51 @@ function movieThis () {
 
 
 
+
+function spotifyThisSong(){
+  var song = process.argv[3] || "The Sign";
+    
+  spotify.search({ type: 'track', query: song 
+})
+  .then(function(response) {
+    var output = response.tracks.items;
+    for (i = 0; i < output.length; i++) {
+      var artists = output[i].artists;
+      for (j = 0; j < artists.length; j++) {
+        console.log("Artist: " + artists[j].name)
+      }
+      console.log("Song name: " + output[i].name + "\n" +
+      "Spotify Preview Link: " + output[i].external_urls.spotify + "\n" +
+      "Album: " + output[i].album.name + "\n\n"
+      )
+    }
+   
+  })
+  .catch(function(err) {
+    console.log(err);
+  });
+}
+
+
+
 //do-what-it-says
+function doWhatItSays(){
 //take text from random.txt and use it to run spotify-this-song
+fs.readFile("./random.txt", "utf8", function(error, data) {
 
-
-
-/*var Spotify = require('node-spotify-api');
-
-
-var spotify = new Spotify({
-  id: SPOTIFY_ID,
-  secret: SPOTIFY_SECRET
-});
-
-spotify.search({ type: 'track', query: 'All the Small Things' }, function (err, data) {
-  if (err) {
-    return console.log('Error occurred: ' + err);
+  // If the code experiences any errors it will log the error to the console.
+  if (error) {
+    return console.log(error);
   }
-
   console.log(data);
+  var song = data[1];
+
+  // We will then re-display the content as an array for later use.
+  console.log(dataArr);
+
+
 });
-*/
+}
 //Switch case
 
 var action = process.argv[2]
