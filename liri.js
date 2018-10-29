@@ -20,16 +20,15 @@ var request = require("request");
 //Argument 2 is concert, song, movie
 
 //Argument 3 is name of concert, song or movie
-
+var title = process.argv[3]
 
 
 //Set up functions. Use 'switch'
 function concertThis() {
   var request = require("request");
   //Get user input for band
-  var artist = process.argv[3];
   //Retrieve data from bandsintown
-  var queryUrl = "https://rest.bandsintown.com/artists/" + artist + "/events/?app_id=codingbootcamp";
+  var queryUrl = "https://rest.bandsintown.com/artists/" + title + "/events/?app_id=codingbootcamp";
   console.log(queryUrl);
   request(queryUrl, function (error, response, body){
     if (!error && response.statusCode === 200){
@@ -64,9 +63,10 @@ function concertThis() {
 function movieThis () {
   var request = require("request");
 //Get user input for movie name. Default is "Mr. Nobody"
-    var movieName = process.argv[3] || "Mr. Nobody";
+    var title = title || "Mr. Nobody"
+   
  //Retrieve data from OMDB
-  var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
+  var queryUrl = "http://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=trilogy";
   console.log(queryUrl);
   request(queryUrl, function (error, response, body) {
     if (!error && response.statusCode === 200) {
@@ -79,7 +79,9 @@ function movieThis () {
         "Plot: " + JSON.parse(body).Plot + "\n" +
         "Actors: " + JSON.parse(body).Actors )
     }
-    
+  
+
+ 
   });
 }
 
@@ -87,9 +89,9 @@ function movieThis () {
 
 
 function spotifyThisSong(){
-  var song = process.argv[3] || "The Sign";
+  var title = title || "The Sign";
     
-  spotify.search({ type: 'track', query: song 
+  spotify.search({ type: 'track', query: title 
 })
   .then(function(response) {
     var output = response.tracks.items;
@@ -125,7 +127,7 @@ fs.readFile("./random.txt", "utf8", function(error, data) {
   var song = data[1];
 
   // We will then re-display the content as an array for later use.
-  console.log(dataArr);
+  console.log(data[1]);
 
 
 });
