@@ -123,18 +123,21 @@ fs.readFile("./random.txt", "utf8", function(error, data) {
   if (error) {
     return console.log(error);
   }
-  console.log(data[1], data[3]);
-  process.argv[3] = data[1]
+  process.argv[3] = data[1];
+  console.log("spotify-this-song: " + data[1]);
   spotifyThisSong();
-  process.argv[3] = data[3]
+  process.argv[3] = data[3];
+  console.log("concert-this: " + data[3]);
   movieThis();
-  process.argv[3] = data[5]
+  process.argv[3] = data[5];
+  console.log("concert-this: " + data[5]);
+  concertThis();
 
 
 
 
-});
-}
+})
+};
 //Switch case
 
 var action = process.argv[2]
