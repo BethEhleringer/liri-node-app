@@ -27,9 +27,9 @@ var request = require("request");
 function concertThis() {
   var request = require("request");
   //Get user input for band
-  var title = process.argv[3];
+  var artist = process.argv[3];
   //Retrieve data from bandsintown
-  var queryUrl = "https://rest.bandsintown.com/artists/" + title + "/events/?app_id=codingbootcamp";
+  var queryUrl = "https://rest.bandsintown.com/artists/" + artist + "/events/?app_id=codingbootcamp";
   console.log(queryUrl);
   request(queryUrl, function (error, response, body){
     if (!error && response.statusCode === 200){
@@ -42,7 +42,6 @@ function concertThis() {
   })
 
 }
-
 
 
 
@@ -62,12 +61,12 @@ function concertThis() {
 //If no song provided, then default The Sign by Ace of Base
 
 // movie-this
-function movieThis() {
+function movieThis () {
   var request = require("request");
 //Get user input for movie name. Default is "Mr. Nobody"
-    var title = process.argv[3] || "Mr. Nobody"
-     //Retrieve data from OMDB
-  var queryUrl = "http://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=trilogy";
+    var movieName = process.argv[3] || "Mr. Nobody";
+ //Retrieve data from OMDB
+  var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
   console.log(queryUrl);
   request(queryUrl, function (error, response, body) {
     if (!error && response.statusCode === 200) {
@@ -115,7 +114,6 @@ function spotifyThisSong(){
 
 //do-what-it-says
 function doWhatItSays(){
-  process.argv[3] = "placeholder"
 //take text from random.txt and use it to run spotify-this-song
 fs.readFile("./random.txt", "utf8", function(error, data) {
 
@@ -123,14 +121,11 @@ fs.readFile("./random.txt", "utf8", function(error, data) {
   if (error) {
     return console.log(error);
   }
-  console.log(data[1], data[3]);
-  process.argv[3] = data[1]
-  spotifyThisSong();
-  process.argv[3] = data[3]
-  movieThis();
-  process.argv[3] = data[5]
+  console.log(data);
+  var song = data[1];
 
-
+  // We will then re-display the content as an array for later use.
+  console.log(dataArr);
 
 
 });

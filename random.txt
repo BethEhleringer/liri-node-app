@@ -1,1 +1,3 @@
-spotifyThisSong, "I Want it That Way"
+spotifyThisSong, "IWantItThatWay",
+movieThis, "Jaws",
+concertThis, "Journey"

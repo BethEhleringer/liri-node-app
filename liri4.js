@@ -115,7 +115,6 @@ function spotifyThisSong(){
 
 //do-what-it-says
 function doWhatItSays(){
-  process.argv[3] = "placeholder"
 //take text from random.txt and use it to run spotify-this-song
 fs.readFile("./random.txt", "utf8", function(error, data) {
 
@@ -123,14 +122,11 @@ fs.readFile("./random.txt", "utf8", function(error, data) {
   if (error) {
     return console.log(error);
   }
-  console.log(data[1], data[3]);
-  process.argv[3] = data[1]
-  spotifyThisSong();
-  process.argv[3] = data[3]
-  movieThis();
-  process.argv[3] = data[5]
+  console.log(data);
+  var song = data[1];
 
-
+  // We will then re-display the content as an array for later use.
+  console.log(dataArr);
 
 
 });

@@ -20,14 +20,13 @@ var request = require("request");
 //Argument 2 is concert, song, movie
 
 //Argument 3 is name of concert, song or movie
-
+var title = process.argv[3]
 
 
 //Set up functions. Use 'switch'
 function concertThis() {
   var request = require("request");
   //Get user input for band
-  var title = process.argv[3];
   //Retrieve data from bandsintown
   var queryUrl = "https://rest.bandsintown.com/artists/" + title + "/events/?app_id=codingbootcamp";
   console.log(queryUrl);
@@ -48,7 +47,6 @@ function concertThis() {
 
 
 
-
 //Get user input for band
 //Search Bands In Town Artist Events API
 //return Name of the venue, venue location, date MM/DD/YYYY
@@ -62,11 +60,12 @@ function concertThis() {
 //If no song provided, then default The Sign by Ace of Base
 
 // movie-this
-function movieThis() {
+function movieThis () {
   var request = require("request");
 //Get user input for movie name. Default is "Mr. Nobody"
-    var title = process.argv[3] || "Mr. Nobody"
-     //Retrieve data from OMDB
+    var title = title || "Mr. Nobody"
+   
+ //Retrieve data from OMDB
   var queryUrl = "http://www.omdbapi.com/?t=" + title + "&y=&plot=short&apikey=trilogy";
   console.log(queryUrl);
   request(queryUrl, function (error, response, body) {
@@ -80,7 +79,9 @@ function movieThis() {
         "Plot: " + JSON.parse(body).Plot + "\n" +
         "Actors: " + JSON.parse(body).Actors )
     }
-    
+  
+
+ 
   });
 }
 
@@ -88,9 +89,9 @@ function movieThis() {
 
 
 function spotifyThisSong(){
-  var song = process.argv[3] || "The Sign";
+  var title = title || "The Sign";
     
-  spotify.search({ type: 'track', query: song 
+  spotify.search({ type: 'track', query: title 
 })
   .then(function(response) {
     var output = response.tracks.items;
@@ -115,7 +116,6 @@ function spotifyThisSong(){
 
 //do-what-it-says
 function doWhatItSays(){
-  process.argv[3] = "placeholder"
 //take text from random.txt and use it to run spotify-this-song
 fs.readFile("./random.txt", "utf8", function(error, data) {
 
@@ -123,14 +123,11 @@ fs.readFile("./random.txt", "utf8", function(error, data) {
   if (error) {
     return console.log(error);
   }
-  console.log(data[1], data[3]);
-  process.argv[3] = data[1]
-  spotifyThisSong();
-  process.argv[3] = data[3]
-  movieThis();
-  process.argv[3] = data[5]
+  console.log(data);
+  var song = data[1];
 
-
+  // We will then re-display the content as an array for later use.
+  console.log(data[1]);
 
 
 });
@@ -140,16 +137,16 @@ fs.readFile("./random.txt", "utf8", function(error, data) {
 var action = process.argv[2]
 console.log(action);
 switch (action) {
-  case ('concert-this'):
+  case ('concert'):
     concertThis() 
     break
-  case ('spotify-this-song'):
+  case ('song'):
     spotifyThisSong()
     break
-  case ('movie-this'):
+  case ('movie'):
     movieThis()
     break
-  case ('do-what-it-says'):
+  case ('doWhat'):
     doWhatItSays()
   break
   default:
